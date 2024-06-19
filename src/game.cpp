@@ -22,6 +22,10 @@ void Game::handleEvent(sf::Event event) {
 		if (event.mouseButton.button == sf::Mouse::Left) {
 			*selected = (SquareType)(!*selected);
 		}
+	} else if (event.type == sf::Event::KeyPressed) {
+		if (event.key.scancode == sf::Keyboard::Scan::Space) {
+			hasStarted = !hasStarted;
+		}
 	}
 }
 
@@ -35,10 +39,25 @@ void Game::update(sf::RenderWindow& window) {
 			for (int x = 0; x < squares[y].size(); x++) {
 				int livingNeighbors = 0;
 
-				if (x - 1 >= 0) {
-					if (squares[y][x - 1]) {
-						
+				auto isAlive = [&](int y, int x) {
+					if (x >= 0 && y >= 0 && x < squares[0].size() && y < squares.size()) {
+						return squares[y][x];
 					}
+
+					return DEAD;
+				};
+
+				livingNeighbors += isAlive(y - 1, x);
+				livingNeighbors += isAlive(y + 1, x);
+				livingNeighbors += isAlive(y - 1, x - 1);
+				livingNeighbors += isAlive(y - 1, x + 1);
+				livingNeighbors += isAlive(y + 1, x - 1);
+				livingNeighbors += isAlive(y + 1, x + 1);
+
+				if (squares[y][x] && livingNeighbors < 2 || livingNeighbors > 3) {
+					squares[y][x] = DEAD;
+				} else if (livingNeighbors == 3) {
+					squares[y][x] = ALIVE;
 				}
 			}
 		}
