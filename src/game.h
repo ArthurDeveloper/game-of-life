@@ -14,8 +14,10 @@ private:
 	std::vector<std::vector<SquareType>> squares;
 	SquareType* selected;
 	int squareSide;
-	
+
 	bool hasStarted;
+
+	sf::Clock timer;
 
 public:
 	Game(int worldWidth, int worldHeight, int squareSide); 

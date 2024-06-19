@@ -34,7 +34,8 @@ void Game::update(sf::RenderWindow& window) {
 
 	selected = &squares[(int)(position.y / squareSide)][(int)(position.x / squareSide)];
 
-	if (hasStarted) {
+	if (hasStarted && timer.getElapsedTime().asMilliseconds() > 500) {
+		timer.restart();
 		for (int y = 0; y < squares.size(); y++) {
 			for (int x = 0; x < squares[y].size(); x++) {
 				int livingNeighbors = 0;
