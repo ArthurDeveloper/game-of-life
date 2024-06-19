@@ -12,10 +12,15 @@ enum SquareType {
 class Game {
 private:
 	std::vector<std::vector<SquareType>> squares;
+	SquareType* selected;
 	int squareSide;
+	
+	bool hasStarted;
 
 public:
 	Game(int worldWidth, int worldHeight, int squareSide); 
 	
+	void handleEvent(sf::Event event);
+	void update(sf::RenderWindow& window);
 	void draw(sf::RenderWindow& window);
 };

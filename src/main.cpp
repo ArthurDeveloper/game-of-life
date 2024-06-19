@@ -19,9 +19,12 @@ int main()
 			{
 				window.close();
 			}
+
+			game.handleEvent(event);
 		}
 
 		window.clear();
+		game.update(window);
 		game.draw(window);
 		window.display();
 	}
