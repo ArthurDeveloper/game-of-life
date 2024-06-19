@@ -1,21 +1,28 @@
 #include <SFML/Graphics.hpp>
+#include "game.h"
 
 int main()
 {
-    auto window = sf::RenderWindow{ { 1920u, 1080u }, "CMake SFML Project" };
-    window.setFramerateLimit(144);
+	sf::RenderWindow window = sf::RenderWindow{ { 640, 480 }, "CMake SFML Project" };
+	window.setFramerateLimit(60);
 
-    while (window.isOpen())
-    {
-        for (auto event = sf::Event{}; window.pollEvent(event);)
-        {
-            if (event.type == sf::Event::Closed)
-            {
-                window.close();
-            }
-        }
+	sf::View view(sf::Vector2f(640 / 2, 480 / 2), sf::Vector2f(640, 480));
+	window.setView(view);
 
-        window.clear();
-        window.display();
-    }
+	Game game(640, 480, 16);
+
+	while (window.isOpen())
+	{
+		for (sf::Event event = sf::Event{}; window.pollEvent(event);)
+		{
+			if (event.type == sf::Event::Closed)
+			{
+				window.close();
+			}
+		}
+
+		window.clear();
+		game.draw(window);
+		window.display();
+	}
 }
